@@ -33,7 +33,7 @@ function! lexiv#paren_open(lhs) abort
   let l:line = getline('.')
   if l:pos >= 1
     let [l:lhs, l:rhs] = [a:lhs, s:pair[a:lhs]]
-    if l:line[l:pos - 1] != l:rhs && len(l:line) != l:pos - 1
+    if index(values(s:pair), l:line[l:pos - 1]) == -1 && len(l:line) != l:pos - 1
       return a:lhs	
     endif
   endif
