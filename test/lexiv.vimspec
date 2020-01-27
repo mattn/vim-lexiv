@@ -1,0 +1,32 @@
+Describe lexiv
+    Describe lexiv#paren_open
+        It should insert pairs
+            let l:tests = [
+            \ ['foo<cursor>', '(', 'foo()'],
+            \ ['foo(<cursor>)', '(', 'foo(())'],
+            \ ['foo<cursor>)', '(', 'foo())'],
+            \ ['<cursor>foo', '(', '(foo'],
+            \ ['<cursor>', '(', '()'],
+            \ ['(<cursor>)', '(', '(())'],
+            \ ['(<cursor>)', '[', '([])'],
+            \ ['(<cursor>,)', '[', '([],)'],
+            \ ['(<cursor>=)', '[', '([]=)'],
+            \ ['(<cursor>:)', '[', '([]:)'],
+            \ ['(<cursor>a)', '[', '([a)'],
+            \]
+
+            for l:test in l:tests
+                new
+                inoremap <expr> " lexiv#string_open('"')
+                call setline(1, l:test[0])
+                call search('<cursor>')
+                exe 'normal' 'ca<' . l:test[1]
+                let l:got = getline('.')
+                let l:want = l:test[2]
+                Assert Equals(l:got, l:want)
+                bw!
+            endfor
+        End
+    End
+End
+
