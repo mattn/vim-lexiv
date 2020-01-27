@@ -52,6 +52,20 @@ function! s:paren_expand() abort
   return "\<cr>"
 endfunction
 
+function! s:paren_delete() abort
+  let l:pos = getpos('.')[2]
+  let l:line = getline('.')
+  if l:pos < 2
+    return "\<bs>"
+  endif
+  let l:lhs = l:line[l:pos-2]
+  let l:rhs = l:line[l:pos-1]
+  if has_key(s:pair, l:lhs) && s:pair[l:lhs] == l:rhs
+    return "\<right>\<bs>\<bs>"
+  endif
+  return "\<bs>"
+endfunction
+
 inoremap <expr> " <SID>string_open('"')
 inoremap <expr> ' <SID>string_open("'")
 inoremap <expr> { <SID>paren_open('{')
@@ -61,3 +75,4 @@ inoremap <expr> } <SID>paren_close('}')
 inoremap <expr> ) <SID>paren_close(')')
 inoremap <expr> ] <SID>paren_close(']')
 inoremap <expr> <cr> <SID>paren_expand()
+inoremap <expr> <bs> <SID>paren_delete()
