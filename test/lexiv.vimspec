@@ -8,6 +8,11 @@ Describe lexiv
             \ ['<cursor>foo', '(', '(foo'],
             \ ['<cursor>', '(', '()'],
             \ ['(<cursor>)', '(', '(())'],
+            \ ['(<cursor>)', '[', '([])'],
+            \ ['(<cursor>,)', '[', '([],)'],
+            \ ['(<cursor>=)', '[', '([]=)'],
+            \ ['(<cursor>:)', '[', '([]:)'],
+            \ ['(<cursor>a)', '[', '([a)'],
             \]
 
             for l:test in l:tests
