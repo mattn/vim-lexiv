@@ -35,7 +35,7 @@ function! s:paren_open(lhs) abort
   if l:line[l:pos] == l:rhs || len(l:line) != l:pos - 1
     return a:lhs
   endif
-  return l:lhs . l:rhs . repeat("\<left>", len(l:rhs))
+  return l:lhs . l:rhs . "\<left>"
 endfunction
 
 function! s:paren_expand() abort
