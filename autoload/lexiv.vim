@@ -50,7 +50,7 @@ function! lexiv#paren_expand() abort
   let l:lhs = l:line[l:pos-2]
   let l:rhs = l:line[l:pos-1]
   if has_key(s:pair, l:lhs) && s:pair[l:lhs] ==# l:rhs
-    return "\<cr>\<c-\>\<c-o>\<c-g>"
+    return "\<cr>\<c-\>\<c-o>O"
   endif
   return "\<cr>"
 endfunction
