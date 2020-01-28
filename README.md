@@ -1,6 +1,6 @@
 # vim-lexiv
 
-Small implementation of lexima
+Small implementation of [lexima.vim](https://github.com/cohama/lexima.vim)
 
 ## Installation
 
