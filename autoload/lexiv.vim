@@ -24,8 +24,14 @@ function! lexiv#paren_close(rhs) abort
   let l:pos = getpos('.')[2]
   let l:line = getline('.')
   if l:pos ==# 1
+    if reg_executing() !=# ''
+      return a:rhs . "\n"
+    endif
     return a:rhs
   elseif l:line[l:pos - 1] !=# a:rhs
+    if reg_executing() !=# ''
+      return a:rhs . "\n"
+    endif
     return a:rhs
   endif
   return "\<c-g>U\<right>"
