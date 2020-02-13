@@ -5,7 +5,7 @@ let s:pair = {
 \  '[':  ']',
 \  '(':  ')',
 \}
-let s:stop = "\"',=:})] \t"
+let s:stop = ",=:})] \t"
 
 function! lexiv#string_open(lhs) abort
   let l:pos = getpos('.')[2]

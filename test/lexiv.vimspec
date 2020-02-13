@@ -17,7 +17,9 @@ Describe lexiv
             \ ['<cursor>"', '"', '""'],
             \ ['<cursor>', '"', '"'],
             \ ['(<cursor>)', '"', '("")'],
-            \ ['"<cursor>"', '(', '"()"'],
+            \ ['"<cursor>"', '(', '"("'],
+            \ ['"<cursor>"', '{', '"{"'],
+            \ ['"<cursor>"', '[', '"["'],
             \]
 
             for l:test in l:tests
