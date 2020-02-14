@@ -10,7 +10,7 @@ let s:stop = ",=:})] \t"
 function! lexiv#string_open(lhs) abort
   let l:pos = getpos('.')[2]
   let l:line = getline('.')
-  if l:pos ># 1 && l:line[l:pos - 2] == a:lhs
+  if l:pos ># 1 && l:line[l:pos - 2] ==# a:lhs && l:line[l:pos - 1] !=# a:lhs
     return a:lhs
   elseif l:line[l:pos - 1] =~# '^[,)}]'
     return a:lhs . a:lhs . "\<c-g>U\<left>"

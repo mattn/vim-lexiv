@@ -20,6 +20,10 @@ Describe lexiv
             \ ['"<cursor>"', '(', '"("'],
             \ ['"<cursor>"', '{', '"{"'],
             \ ['"<cursor>"', '[', '"["'],
+            \ ['(<cursor>)', '"', '("")'],
+            \ ['("<cursor>)', '"', '("")'],
+            \ ['("<cursor>")', '"', '("")'],
+            \ ['("foo<cursor>")', '"', '("foo")'],
             \]
 
             for l:test in l:tests
