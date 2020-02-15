@@ -17,6 +17,11 @@ function! lexiv#string_open(lhs) abort
   elseif l:line[l:pos - 1] ==# a:lhs && l:pos < len(l:line) && l:line[l:pos] !=# a:lhs
     return "\<c-g>U\<right>"
   endif
+  let l:lhs = l:line[l:pos-2]
+  let l:rhs = l:line[l:pos-1]
+  if has_key(s:pair, l:lhs) && s:pair[l:lhs] ==# l:rhs
+    return a:lhs . a:lhs . "\<c-g>U\<left>"
+  endif
   return a:lhs
 endfunction
 
