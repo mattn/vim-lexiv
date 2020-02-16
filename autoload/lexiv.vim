@@ -14,7 +14,7 @@ function! lexiv#string_open(lhs) abort
     return a:lhs
   elseif l:line[l:pos - 1] =~# '^[,)}]'
     return a:lhs . a:lhs . "\<c-g>U\<left>"
-  elseif l:line[l:pos - 1] ==# a:lhs && l:pos < len(l:line) && l:line[l:pos] !=# a:lhs
+  elseif l:line[l:pos - 1] ==# a:lhs && l:pos <= len(l:line) && l:line[l:pos] !=# a:lhs
     return "\<c-g>U\<right>"
   endif
   let l:lhs = l:line[l:pos-2]
