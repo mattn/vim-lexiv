@@ -24,7 +24,7 @@ function! lexiv#quote_open(lhs) abort
     return a:lhs
   elseif !has_key(s:quote_open_blacklist, &filetype) && (l:line[l:pos - 1] =~# '^[,)}]' || l:line[l:pos - 1] == '')
     return a:lhs . a:lhs . "\<c-g>U\<left>"
-  elseif has_key(s:quote_open_blacklist, &filetype) && a:lhs ==# s:quote_open_blacklist[&filetype] && l:pos ># 1 && l:line[l:pos - 2] !=# ''
+  elseif has_key(s:quote_open_blacklist, &filetype) && a:lhs ==# s:quote_open_blacklist[&filetype] && l:pos ># 1 && stridx(" \t",  l:line[l:pos - 2]) == -1
     return a:lhs . a:lhs . "\<c-g>U\<left>"
   elseif l:line[l:pos - 1] ==# a:lhs && l:pos <= len(l:line) && l:line[l:pos] !=# a:lhs
     return "\<c-g>U\<right>"
