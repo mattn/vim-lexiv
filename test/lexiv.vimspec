@@ -2,40 +2,45 @@ Describe lexiv
     Describe lexiv#paren_open
         It should insert pairs
             let l:tests = [
-            \ ['foo<cursor>', '(', 'foo()'],
-            \ ['foo(<cursor>)', '(', 'foo(())'],
-            \ ['foo<cursor>)', '(', 'foo())'],
-            \ ['<cursor>foo', '(', '(foo'],
-            \ ['<cursor>', '(', '()'],
-            \ ['(<cursor>)', '(', '(())'],
-            \ ['(<cursor>)', '[', '([])'],
-            \ ['(<cursor>,)', '[', '([],)'],
-            \ ['(<cursor>=)', '[', '([]=)'],
-            \ ['(<cursor>:)', '[', '([]:)'],
-            \ ['(<cursor>a)', '[', '([a)'],
-            \ ['"<cursor>', '"', '""'],
-            \ ['"foo<cursor>"', '"', '"foo"'],
-            \ ['<cursor>"', '"', '"'],
-            \ ['<cursor>', '"', '"'],
-            \ ['(<cursor>)', '"', '("")'],
-            \ ['"<cursor>"', '(', '"("'],
-            \ ['"<cursor>"', '{', '"{"'],
-            \ ['"<cursor>"', '[', '"["'],
-            \ ['(<cursor>)', '"', '("")'],
-            \ ['("<cursor>)', '"', '("")'],
-            \ ['("<cursor>")', '"', '("")'],
-            \ ['("foo<cursor>")', '"', '("foo")'],
-            \ ['[<cursor>]', '"', '[""]'],
+            \ ['', 'foo<cursor>', '(', 'foo()'],
+            \ ['', 'foo(<cursor>)', '(', 'foo(())'],
+            \ ['', 'foo<cursor>)', '(', 'foo())'],
+            \ ['', '<cursor>foo', '(', '(foo'],
+            \ ['', '<cursor>', '(', '()'],
+            \ ['', '(<cursor>)', '(', '(())'],
+            \ ['', '(<cursor>)', '[', '([])'],
+            \ ['', '(<cursor>,)', '[', '([],)'],
+            \ ['', '(<cursor>=)', '[', '([]=)'],
+            \ ['', '(<cursor>:)', '[', '([]:)'],
+            \ ['', '(<cursor>a)', '[', '([a)'],
+            \ ['', '"<cursor>', '"', '""'],
+            \ ['', '"foo<cursor>"', '"', '"foo"'],
+            \ ['', '<cursor>"', '"', '"'],
+            \ ['', '<cursor>', '"', '""'],
+            \ ['vim', '<cursor>', '"', '"'],
+            \ ['vim', 'FOO=<cursor>', '"', 'FOO=""'],
+            \ ['', '(<cursor>)', '"', '("")'],
+            \ ['', '"<cursor>"', '(', '"("'],
+            \ ['', '"<cursor>"', '{', '"{"'],
+            \ ['', '"<cursor>"', '[', '"["'],
+            \ ['', '(<cursor>)', '"', '("")'],
+            \ ['', '("<cursor>)', '"', '("")'],
+            \ ['', '("<cursor>")', '"', '("")'],
+            \ ['', '("foo<cursor>")', '"', '("foo")'],
+            \ ['', '[<cursor>]', '"', '[""]'],
             \]
 
             for l:test in l:tests
                 new
                 inoremap <expr> " lexiv#string_open('"')
-                call setline(1, l:test[0])
+                call setline(1, l:test[1])
                 call search('<cursor>')
-                exe 'normal' 'ca<' . l:test[1]
+                let old_filetype = &filetype
+                noau let &filetype = l:test[0]
+                exe 'normal' 'ca<' . l:test[2]
+                noau let &filetype = old_filetype
                 let l:got = getline('.')
-                let l:want = l:test[2]
+                let l:want = l:test[3]
                 Assert Equals(l:got, l:want)
                 bw!
             endfor

@@ -1,5 +1,6 @@
 inoremap <expr> " lexiv#string_open('"')
 inoremap <expr> ' lexiv#string_open("'")
+inoremap <expr> ` lexiv#string_open("`")
 inoremap <expr> { lexiv#paren_open('{')
 inoremap <expr> ( lexiv#paren_open('(')
 inoremap <expr> [ lexiv#paren_open('[')
