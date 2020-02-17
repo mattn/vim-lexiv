@@ -28,18 +28,21 @@ Describe lexiv
             \ ['', '("<cursor>")', '"', '("")'],
             \ ['', '("foo<cursor>")', '"', '("foo")'],
             \ ['', '[<cursor>]', '"', '[""]'],
+            \ ['', '<cursor>', '`', '``'],
+            \ ['', '``<cursor>', '`', '```'],
+            \ ['markdown', '``<cursor>', '`', "```\n\n```"],
             \]
 
             for l:test in l:tests
                 new
-                inoremap <expr> " lexiv#string_open('"')
+                inoremap <expr> " lexiv#quote_open('"')
                 call setline(1, l:test[1])
                 call search('<cursor>')
                 let old_filetype = &filetype
                 noau let &filetype = l:test[0]
                 exe 'normal' 'ca<' . l:test[2]
                 noau let &filetype = old_filetype
-                let l:got = getline('.')
+                let l:got = join(getline(1, '$'), "\n")
                 let l:want = l:test[3]
                 Assert Equals(l:got, l:want)
                 bw!

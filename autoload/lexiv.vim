@@ -7,16 +7,24 @@ let s:pair = {
 \  '(':  ')',
 \}
 let s:stop = ",=:})] \t"
-let s:string_open_blacklist = ['vim']
+let s:backquote_open_whitelist = ['markdown']
+let s:quote_open_blacklist = {'vim': '"'}
 
-function! lexiv#string_open(lhs) abort
+function! lexiv#backquote_open() abort
+  if index(s:backquote_open_whitelist, &filetype) != -1 && getline('.') == '``'
+	  return "\<c-g>U\<esc>A`\<cr>\<cr>```\<up>"
+  endif
+  return lexiv#quote_open('`')
+endfunction
+
+function! lexiv#quote_open(lhs) abort
   let l:pos = getpos('.')[2]
   let l:line = getline('.')
   if l:pos ># 1 && l:line[l:pos - 2] ==# a:lhs && l:line[l:pos - 1] !=# a:lhs
     return a:lhs
-  elseif index(s:string_open_blacklist, &filetype) ==# -1 && (l:line[l:pos - 1] =~# '^[,)}]' || l:line[l:pos - 1] == '')
+  elseif !has_key(s:quote_open_blacklist, &filetype) && (l:line[l:pos - 1] =~# '^[,)}]' || l:line[l:pos - 1] == '')
     return a:lhs . a:lhs . "\<c-g>U\<left>"
-  elseif index(s:string_open_blacklist, &filetype) !=# -1 && l:pos ># 1 && l:line[l:pos - 2] !=# ''
+  elseif has_key(s:quote_open_blacklist, &filetype) && a:lhs ==# s:quote_open_blacklist[&filetype] && l:pos ># 1 && l:line[l:pos - 2] !=# ''
     return a:lhs . a:lhs . "\<c-g>U\<left>"
   elseif l:line[l:pos - 1] ==# a:lhs && l:pos <= len(l:line) && l:line[l:pos] !=# a:lhs
     return "\<c-g>U\<right>"
