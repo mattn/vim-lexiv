@@ -18,6 +18,9 @@ function! lexiv#backquote_open() abort
 endfunction
 
 function! lexiv#quote_open(lhs) abort
+  if has_key(b:, 'asyncomplete_refresh_pattern') && a:lhs =~ b:asyncomplete_refresh_pattern
+    return a:lhs
+  endif
   let l:pos = getpos('.')[2]
   let l:line = getline('.')
   if l:pos ># 1 && l:line[l:pos - 2] ==# a:lhs && l:line[l:pos - 1] !=# a:lhs
@@ -55,6 +58,9 @@ function! lexiv#paren_close(rhs) abort
 endfunction
 
 function! lexiv#paren_open(lhs) abort
+  if has_key(b:, 'asyncomplete_refresh_pattern') && a:lhs =~ b:asyncomplete_refresh_pattern
+    return a:lhs
+  endif
   let l:pos = getpos('.')[2]	
   let l:line = getline('.')
   if l:pos >=# 1
