@@ -7,7 +7,7 @@ Small implementation of [lexima.vim](https://github.com/cohama/lexima.vim)
 For [vim-plug](https://github.com/junegunn/vim-plug) plugin manager:
 
 ```
-Plug 'vim-lexiv'
+Plug 'mattn/vim-lexiv'
 ```
 
 ## License
