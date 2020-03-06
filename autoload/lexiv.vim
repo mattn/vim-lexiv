@@ -76,7 +76,7 @@ endfunction
 function! lexiv#paren_expand() abort
   let l:pos = getpos('.')[2]
   let l:line = getline('.')
-  if l:pos <# 2
+  if l:pos <# 2 || pumvisible()
     return "\<cr>"
   endif
   let l:lhs = l:line[l:pos-2]
