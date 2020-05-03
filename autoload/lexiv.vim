@@ -21,12 +21,16 @@ function! s:is_completing(lhs) abort
   return has_key(b:, 'asyncomplete_refresh_pattern') && a:lhs =~ b:asyncomplete_refresh_pattern
 endfunction
 
+function! s:is_apostrophe(lhs, line, pos) abort
+  return a:lhs ==# '''' && a:line[a:pos - 2] =~? '\w'
+endfunction
+
 function! lexiv#quote_open(lhs) abort
   let l:pos = getpos('.')[2]
   let l:line = getline('.')
   if l:pos ># 1 && l:line[l:pos - 2] ==# a:lhs && l:line[l:pos - 1] !=# a:lhs
     return a:lhs
-  elseif !has_key(s:quote_open_blacklist, &filetype) && (l:line[l:pos - 1] =~# '^[,)}]' || l:line[l:pos - 1] == '') && !s:is_completing(a:lhs)
+  elseif !has_key(s:quote_open_blacklist, &filetype) && (l:line[l:pos - 1] =~# '^[,)}]' || l:line[l:pos - 1] == '') && !s:is_completing(a:lhs) && !s:is_apostrophe(a:lhs, l:line, l:pos)
     return a:lhs . a:lhs . "\<c-g>U\<left>"
   elseif has_key(s:quote_open_blacklist, &filetype) && a:lhs ==# s:quote_open_blacklist[&filetype] && l:pos ># 1 && stridx(" \t",  l:line[l:pos - 2]) == -1
     return a:lhs . a:lhs . "\<c-g>U\<left>"
