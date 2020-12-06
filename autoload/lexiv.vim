@@ -30,6 +30,9 @@ function! s:is_apostrophe(lhs, line, pos) abort
 endfunction
 
 function! lexiv#quote_open(lhs) abort
+  if synIDattr(synID(line("."), col("."), 1), "name") =~# 'String$'
+    return a:lhs
+  endif
   let l:pos = getpos('.')[2]
   let l:line = getline('.')
   if l:pos ># 1 && l:line[l:pos - 2] ==# a:lhs && l:line[l:pos - 1] !=# a:lhs
