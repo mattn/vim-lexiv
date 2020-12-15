@@ -17,10 +17,12 @@ Describe lexiv
             \ ['', '"foo<cursor>"', '"', '"foo"'],
             \ ['', '<cursor>"', '"', '"'],
             \ ['', '<cursor>', '"', '""'],
+            \ ['', 'BAR=<cursor>', '"', 'BAR=""'],
+            \ ['', 'echo <cursor>', '"', 'echo ""'],
             \ ['vim', '<cursor>', '"', '"'],
-            \ ['vim', 'FOO=<cursor>', '"', 'FOO=""'],
-            \ ['vim', 'echo <cursor>', '"', 'echo ""'],
-            \ ['vim', 'echo "foo<cursor>"', '"', 'echo "foo"'],
+            \ ['vim', 'FOO=<cursor>', '"', 'FOO="'],
+            \ ['vim', 'echo <cursor>', '"', 'echo "'],
+            \ ['vim', 'echo "foo<cursor>"', '"', 'echo "foo""'],
             \ ['vim', "echo <cursor>", "'", "echo ''"],
             \ ['vim', "echo 'foo<cursor>'", "'", "echo 'foo'"],
             \ ['', '(<cursor>)', '"', '("")'],
@@ -35,7 +37,7 @@ Describe lexiv
             \ ['', '<cursor>', '`', '``'],
             \ ['', '``<cursor>', '`', '```'],
             \ ['markdown', '``<cursor>', '`', "```\n\n```"],
-            \ ['', 'don<cursor>', "'", "don'"],
+            \ ['', 'don<cursor>', "'", "don''"],
             \]
 
             for l:test in l:tests
