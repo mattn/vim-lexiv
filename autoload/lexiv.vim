@@ -8,7 +8,7 @@ let s:pair = {
 \}
 let s:stop = ",=:})] \t"
 let s:backquote_open_allowlist = ['markdown']
-let s:quote_open_blocklist = {'vim': '"'}
+let s:quote_open_blocklist = {'vim': '"', 'lisp': ''''}
 
 function! lexiv#backquote_open() abort
   if index(s:backquote_open_allowlist, &filetype) != -1 && getline('.') == '``'
@@ -30,7 +30,7 @@ function! s:is_apostrophe(lhs, line, pos) abort
 endfunction
 
 function! lexiv#quote_open(lhs) abort
-  if synIDattr(synID(line("."), col("."), 1), "name") =~# 'String$'
+  if s:is_blocklist_case(a:lhs) || synIDattr(synID(line("."), col("."), 1), "name") =~# 'String$'
     return a:lhs
   endif
   let l:pos = getpos('.')[2]
@@ -39,7 +39,7 @@ function! lexiv#quote_open(lhs) abort
     return a:lhs
   elseif !s:is_blocklist_case(a:lhs) && (l:line[l:pos - 1] =~# '^[,)}]' || l:line[l:pos - 1] == '') && !s:is_completing(a:lhs) && !s:is_apostrophe(a:lhs, l:line, l:pos)
     return a:lhs . a:lhs . "\<c-g>U\<left>"
-  elseif s:is_blocklist_case(a:lhs) && l:pos ># 1 && l:line[: l:pos - 2] !~? '^[ \t]*$' && l:line[l:pos - 1] !=# a:lhs
+  elseif l:pos ># 1 && l:line[: l:pos - 2] !~? '^[ \t]*$' && l:line[l:pos - 1] !=# a:lhs
     return a:lhs . a:lhs . "\<c-g>U\<left>"
   elseif l:line[l:pos - 1] ==# a:lhs && l:pos <= len(l:line) && l:line[l:pos] !=# a:lhs
     return "\<c-g>U\<right>"
