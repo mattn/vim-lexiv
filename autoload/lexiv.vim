@@ -30,7 +30,7 @@ function! s:is_apostrophe(lhs, line, pos) abort
 endfunction
 
 function! lexiv#quote_open(lhs) abort
-  if s:is_blocklist_case(a:lhs) || synIDattr(synID(line("."), col("."), 1), "name") =~# 'String$'
+  if s:is_blocklist_case(a:lhs) || synIDattr(synID(line('.'), col('.'), 1), 'name') =~# 'String$'
     return a:lhs
   endif
   let l:pos = getpos('.')[2]
