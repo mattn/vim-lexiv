@@ -29,15 +29,19 @@ function! s:is_apostrophe(lhs, line, pos) abort
   return a:lhs ==# '''' && a:line[a:pos - 2] =~? '\w'
 endfunction
 
+function! s:in_string() abort
+  return synIDattr(synID(line('.'), col('.')-1, 1), 'name') =~# 'String$'
+endfunction
+
 function! lexiv#quote_open(lhs) abort
-  if s:is_blocklist_case(a:lhs)
+  if s:is_blocklist_case(a:lhs) || s:in_string()
     return a:lhs
   endif
   let l:pos = getpos('.')[2]
   let l:line = getline('.')
   if l:pos ># 1 && l:line[l:pos - 2] ==# a:lhs && l:line[l:pos - 1] !=# a:lhs
     return a:lhs
-  elseif !s:is_blocklist_case(a:lhs) && (l:line[l:pos - 1] =~# '^[,)}]' || l:line[l:pos - 1] == '') && !s:is_completing(a:lhs) && !s:is_apostrophe(a:lhs, l:line, l:pos)
+  elseif (l:line[l:pos - 1] =~# '^[,)}]' || l:line[l:pos - 1] == '') && !s:is_completing(a:lhs) && !s:is_apostrophe(a:lhs, l:line, l:pos)
     return a:lhs . a:lhs . "\<c-g>U\<left>"
   elseif l:pos ># 1 && l:line[: l:pos - 2] !~? '^[ \t]*$' && l:line[l:pos - 1] !=# a:lhs
     return a:lhs . a:lhs . "\<c-g>U\<left>"
