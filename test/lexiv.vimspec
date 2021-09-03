@@ -24,7 +24,7 @@ Describe lexiv
             \ ['vim', 'echo <cursor>', '"', 'echo "'],
             \ ['vim', 'echo "foo<cursor>"', '"', 'echo "foo""'],
             \ ['vim', "echo <cursor>", "'", "echo ''"],
-            \ ['vim', "echo 'foo<cursor>'", "'", "echo 'foo'"],
+            \ ['vim', "echo 'bar<cursor>'", "'", "echo 'bar''"],
             \ ['', '(<cursor>)', '"', '("")'],
             \ ['', '"<cursor>"', '(', '"("'],
             \ ['', '"<cursor>"', '{', '"{"'],
@@ -38,6 +38,7 @@ Describe lexiv
             \ ['', '``<cursor>', '`', '```'],
             \ ['markdown', '``<cursor>', '`', "```\n\n```"],
             \ ['', 'don<cursor>', "'", "don''"],
+            \ ['cpp', '"foo<cursor>', '"', '"foo"'],
             \]
 
             for l:test in l:tests
@@ -47,6 +48,7 @@ Describe lexiv
                 call search('<cursor>')
                 let old_filetype = &filetype
                 noau let &filetype = l:test[0]
+                syntax on
                 exe 'normal' 'ca<' . l:test[2]
                 noau let &filetype = old_filetype
                 let l:got = join(getline(1, '$'), "\n")
