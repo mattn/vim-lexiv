@@ -34,12 +34,14 @@ function! s:in_string() abort
 endfunction
 
 function! lexiv#quote_open(lhs) abort
-  if s:is_blocklist_case(a:lhs) || s:in_string()
+  if s:is_blocklist_case(a:lhs)
     return a:lhs
   endif
   let l:pos = getpos('.')[2]
   let l:line = getline('.')
   if l:pos ># 1 && l:line[l:pos - 2] ==# a:lhs && l:line[l:pos - 1] !=# a:lhs
+    return a:lhs
+  elseif l:pos ># 1 && l:line[l:pos - 1] !=# a:lhs && s:in_string()
     return a:lhs
   elseif (l:line[l:pos - 1] =~# '^[,)}]' || l:line[l:pos - 1] == '') && !s:is_completing(a:lhs) && !s:is_apostrophe(a:lhs, l:line, l:pos)
     return a:lhs . a:lhs . "\<c-g>U\<left>"

@@ -22,9 +22,9 @@ Describe lexiv
             \ ['vim', '<cursor>', '"', '"'],
             \ ['vim', 'FOO=<cursor>', '"', 'FOO="'],
             \ ['vim', 'echo <cursor>', '"', 'echo "'],
-            \ ['vim', 'echo "foo<cursor>"', '"', 'echo "foo""'],
+            \ ['vim', 'echo "bar<cursor>"', '"', 'echo "bar""'],
             \ ['vim', "echo <cursor>", "'", "echo ''"],
-            \ ['vim', "echo 'bar<cursor>'", "'", "echo 'bar''"],
+            \ ['vim', "echo 'baz<cursor>'", "'", "echo 'baz'"],
             \ ['', '(<cursor>)', '"', '("")'],
             \ ['', '"<cursor>"', '(', '"("'],
             \ ['', '"<cursor>"', '{', '"{"'],
@@ -38,7 +38,7 @@ Describe lexiv
             \ ['', '``<cursor>', '`', '```'],
             \ ['markdown', '``<cursor>', '`', "```\n\n```"],
             \ ['', 'don<cursor>', "'", "don''"],
-            \ ['cpp', '"foo<cursor>', '"', '"foo"'],
+            \ ['cpp', '"doo<cursor>', '"', '"doo"'],
             \]
 
             for l:test in l:tests
