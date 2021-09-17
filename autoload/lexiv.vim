@@ -39,19 +39,19 @@ function! lexiv#quote_open(lhs) abort
   endif
   let l:pos = getpos('.')[2]
   let l:line = getline('.')
-  if l:pos ># 1 && l:line[l:pos - 2] ==# a:lhs && l:line[l:pos - 1] !=# a:lhs
-    return a:lhs
-  elseif l:pos ># 1 && l:line[l:pos - 1] !=# a:lhs && s:in_string()
-    return a:lhs
-  elseif (l:line[l:pos - 1] =~# '^[,)}]' || l:line[l:pos - 1] == '') && !s:is_completing(a:lhs) && !s:is_apostrophe(a:lhs, l:line, l:pos)
-    return a:lhs . a:lhs . "\<c-g>U\<left>"
-  elseif l:pos ># 1 && l:line[: l:pos - 2] !~? '^[ \t]*$' && l:line[l:pos - 1] !=# a:lhs
-    return a:lhs . a:lhs . "\<c-g>U\<left>"
-  elseif l:line[l:pos - 1] ==# a:lhs && l:pos <= len(l:line) && l:line[l:pos] !=# a:lhs
-    return "\<c-g>U\<right>"
-  endif
   let l:lhs = l:line[l:pos-2]
   let l:rhs = l:line[l:pos-1]
+  if l:pos ># 1 && l:lhs ==# a:lhs && l:rhs !=# a:lhs
+    return a:lhs
+  elseif l:pos ># 1 && l:rhs !=# a:lhs && s:in_string()
+    return a:lhs
+  elseif (l:rhs =~# '^[,)}]' || l:rhs == '') && !s:is_completing(a:lhs) && !s:is_apostrophe(a:lhs, l:line, l:pos) && !s:in_string()
+    return a:lhs . a:lhs . "\<c-g>U\<left>"
+  elseif l:pos ># 1 && l:line[: l:pos-2] !~? '^[ \t]*$' && l:rhs !=# a:lhs
+    return a:lhs . a:lhs . "\<c-g>U\<left>"
+  elseif l:rhs ==# a:lhs && l:pos <= len(l:line) && l:line[l:pos] !=# a:lhs
+    return "\<c-g>U\<right>"
+  endif
   if has_key(s:pair, l:lhs) && s:pair[l:lhs] ==# l:rhs
     return a:lhs . a:lhs . "\<c-g>U\<left>"
   endif

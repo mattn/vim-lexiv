@@ -53,8 +53,8 @@ Describe lexiv
                 noau let &filetype = old_filetype
                 let l:got = join(getline(1, '$'), "\n")
                 let l:want = l:test[3]
-                Assert Equals(l:got, l:want)
                 bw!
+                Assert Equals(l:got, l:want)
             endfor
         End
     End
