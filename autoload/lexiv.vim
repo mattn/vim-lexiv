@@ -45,6 +45,8 @@ function! lexiv#quote_open(lhs) abort
     return a:lhs
   elseif l:pos ># 1 && l:rhs !=# a:lhs && s:in_string()
     return a:lhs
+  elseif l:pos ># 1 && l:rhs !=# a:lhs && l:rhs =~# '\w'
+    return a:lhs
   elseif (l:rhs =~# '^[,)}]' || l:rhs == '') && !s:is_completing(a:lhs) && !s:is_apostrophe(a:lhs, l:line, l:pos) && !s:in_string()
     return a:lhs . a:lhs . "\<c-g>U\<left>"
   elseif l:pos ># 1 && l:line[: l:pos-2] !~? '^[ \t]*$' && l:rhs !=# a:lhs

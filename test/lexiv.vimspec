@@ -39,6 +39,8 @@ Describe lexiv
             \ ['markdown', '``<cursor>', '`', "```\n\n```"],
             \ ['', 'don<cursor>', "'", "don''"],
             \ ['cpp', '"doo<cursor>', '"', '"doo"'],
+            \ ['cpp', 'foo<cursor>(', '"', 'foo""('],
+            \ ['cpp', 'foo<cursor>bar', '"', 'foo"bar'],
             \]
 
             for l:test in l:tests
